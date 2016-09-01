@@ -59,8 +59,8 @@ public extension SQLStmt {
         return self.append(pureSQL)
     }
     
-    public func expr(expr: String, params: [AnyObject]) -> Self {
-        let pureSQL = PureSQL(expr, params: params)
+    public func op(op: String) -> Self {
+        let pureSQL = PureSQL(op, params: [])
         return self.append(pureSQL)
     }
     

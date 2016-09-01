@@ -4,7 +4,7 @@ import UIKit
 
 let select = SimpleSelect()
 
-select.select(["c1","c3"]).from("tbl_tags").inWhere().expr("a == ?", params: ["x"]).and().expr("b < ?", params: ["y"]).or().expr("c <> ?", params: ["ono"]).and().inSet(["1","b","c","123"]).orderBy([("c1", Order.ASC), ("c2", Order.DESC)]).offset(42).limit(22).pureSQL("xxxxxxxxxxxxx", params: [])
+select.select(["c1","c3"]).from("tbl_tags").inWhere().identifier("a").op("==").value("x").and().identifier("b").op("<").value("y").or().identifier("c").op("<>").value("ono").and().inSet(["1","b","c","123"]).orderBy([("c1", Order.ASC), ("c2", Order.DESC)]).offset(42).limit(22)
 
 select.string()
 select.parameters()
@@ -18,15 +18,14 @@ insert.parameters()
 
 let update = SimpleUpdate()
 
-update.update().table("tbl_people").set(["c1":"x1","c2":"x2"]).inWhere().expr("a == ?", params: ["x"]).and().expr("b < ?", params: ["y"]).or().expr("c <> ?", params: ["ono"]).and().not().inSet(["1","b","c","123"])
-
+update.update().table("tbl_people").set(["c1":"x1","c2":"x2"]).inWhere().identifier("a").op("==").value("x").and().identifier("b").op("<").value("y").or().identifier("c").op("<>").value("ono").and().inSet(["1","b","c","123"])
 update.string()
 update.parameters()
 
 
 let delete = SimpleDelete()
 
-delete.deleteFrom("tbl_medias").inWhere().expr("a == ?", params: ["x"]).and().expr("b < ?", params: ["y"]).or().expr("c <> ?", params: ["ono"]).and().not().inSet(["1","b","c","123"])
+delete.deleteFrom("tbl_medias").inWhere().enclosedExpr(SQLStmt().identifier("a").op("==").value("x").and().identifier("b").op("<").value("y")).or().enclosedExpr(SQLStmt().identifier("c").op("<>").value("ono").and().identifier("c4").not().inSet(["1","b","c","123"]))
 
 delete.string()
 delete.parameters()
