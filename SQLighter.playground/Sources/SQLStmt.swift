@@ -54,7 +54,7 @@ public extension SQLStmt {
         return self.append(pureSQL)
     }
     
-    public func inWhere() -> Self {
+    public func fromWhere() -> Self {
         let pureSQL = PureSQL("WHERE", params: [])
         return self.append(pureSQL)
     }
