@@ -39,7 +39,7 @@ public class SQLStmt {
 }
 
 public extension SQLStmt {
-    public func pureSQL(expr: String, params: [AnyObject]) -> Self {
+    public func sql(expr: String, params: [AnyObject]) -> Self {
         let pureSQL = PureSQL(expr, params: params)
         return self.append(pureSQL)
     }
@@ -54,7 +54,7 @@ public extension SQLStmt {
         return self.append(pureSQL)
     }
     
-    public func fromWhere() -> Self {
+    public func wherec() -> Self {
         let pureSQL = PureSQL("WHERE", params: [])
         return self.append(pureSQL)
     }
