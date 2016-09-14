@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		426032301D896D8E00E0A949 /* SQLStmtGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4260322F1D896D8E00E0A949 /* SQLStmtGroup.swift */; };
 		42A87EC81D8591D400258522 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87EC71D8591D400258522 /* main.swift */; };
-		42A87ED71D85921E00258522 /* Expression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED01D85921E00258522 /* Expression.swift */; };
+		42A87ED71D85921E00258522 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED01D85921E00258522 /* Operators.swift */; };
 		42A87ED91D85921E00258522 /* SimpleDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED21D85921E00258522 /* SimpleDelete.swift */; };
 		42A87EDA1D85921E00258522 /* SimpleInsert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED31D85921E00258522 /* SimpleInsert.swift */; };
 		42A87EDB1D85921E00258522 /* SimpleSelect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED41D85921E00258522 /* SimpleSelect.swift */; };
 		42A87EDC1D85921E00258522 /* SimpleUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED51D85921E00258522 /* SimpleUpdate.swift */; };
 		42A87EDD1D85921E00258522 /* SQLStmt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED61D85921E00258522 /* SQLStmt.swift */; };
-		42A87EDF1D85931200258522 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87EDE1D85931200258522 /* Identifier.swift */; };
+		42A87EDF1D85931200258522 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87EDE1D85931200258522 /* Helper.swift */; };
+		42D144EA1D8931B200FBEB70 /* SQLStmt+Operator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D144E91D8931B200FBEB70 /* SQLStmt+Operator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,15 +32,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4260322F1D896D8E00E0A949 /* SQLStmtGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLStmtGroup.swift; sourceTree = "<group>"; };
 		42A87EC41D8591D400258522 /* SQLighter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SQLighter; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A87EC71D8591D400258522 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		42A87ED01D85921E00258522 /* Expression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Expression.swift; sourceTree = "<group>"; };
+		42A87ED01D85921E00258522 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		42A87ED21D85921E00258522 /* SimpleDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleDelete.swift; sourceTree = "<group>"; };
 		42A87ED31D85921E00258522 /* SimpleInsert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleInsert.swift; sourceTree = "<group>"; };
 		42A87ED41D85921E00258522 /* SimpleSelect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleSelect.swift; sourceTree = "<group>"; };
 		42A87ED51D85921E00258522 /* SimpleUpdate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleUpdate.swift; sourceTree = "<group>"; };
 		42A87ED61D85921E00258522 /* SQLStmt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLStmt.swift; sourceTree = "<group>"; };
-		42A87EDE1D85931200258522 /* Identifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		42A87EDE1D85931200258522 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		42D144E91D8931B200FBEB70 /* SQLStmt+Operator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SQLStmt+Operator.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,12 +93,14 @@
 		42A87ECF1D85921E00258522 /* Simple */ = {
 			isa = PBXGroup;
 			children = (
-				42A87ED01D85921E00258522 /* Expression.swift */,
+				42A87ED01D85921E00258522 /* Operators.swift */,
 				42A87ED21D85921E00258522 /* SimpleDelete.swift */,
 				42A87ED31D85921E00258522 /* SimpleInsert.swift */,
 				42A87ED41D85921E00258522 /* SimpleSelect.swift */,
 				42A87ED51D85921E00258522 /* SimpleUpdate.swift */,
-				42A87EDE1D85931200258522 /* Identifier.swift */,
+				42A87EDE1D85931200258522 /* Helper.swift */,
+				42D144E91D8931B200FBEB70 /* SQLStmt+Operator.swift */,
+				4260322F1D896D8E00E0A949 /* SQLStmtGroup.swift */,
 			);
 			path = Simple;
 			sourceTree = "<group>";
@@ -156,14 +162,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42D144EA1D8931B200FBEB70 /* SQLStmt+Operator.swift in Sources */,
 				42A87EDD1D85921E00258522 /* SQLStmt.swift in Sources */,
-				42A87EDF1D85931200258522 /* Identifier.swift in Sources */,
+				42A87EDF1D85931200258522 /* Helper.swift in Sources */,
 				42A87EDA1D85921E00258522 /* SimpleInsert.swift in Sources */,
 				42A87EC81D8591D400258522 /* main.swift in Sources */,
 				42A87EDC1D85921E00258522 /* SimpleUpdate.swift in Sources */,
+				426032301D896D8E00E0A949 /* SQLStmtGroup.swift in Sources */,
 				42A87EDB1D85921E00258522 /* SimpleSelect.swift in Sources */,
 				42A87ED91D85921E00258522 /* SimpleDelete.swift in Sources */,
-				42A87ED71D85921E00258522 /* Expression.swift in Sources */,
+				42A87ED71D85921E00258522 /* Operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +293,7 @@
 				42A87ECD1D8591D400258522 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
