@@ -19,6 +19,10 @@ public class SQLStmt: ArrayLiteralConvertible {
         self.init("", params: [])
     }
     
+    public convenience init(_ sql: String) {
+        self.init(sql, params: [])
+    }
+    
     required public convenience init(arrayLiteral elements: SQLStmt...) {
         self.init()
         if elements.count == 0 {
@@ -28,14 +32,18 @@ public class SQLStmt: ArrayLiteralConvertible {
             append(elements[0])
             return
         }
-        append("(")
-        for (index, expr) in elements.enumerate() {
-            if index != 0  && (!elements[index - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
-                append(and())
+        append(enclosed(andJoined(elements)))
+    }
+    
+    private func andJoined(sqls: [SQLStmt]) -> [SQLStmt] {
+        var ret = [SQLStmt]()
+        for (index, sql) in sqls.enumerate() {
+            if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
+                ret.append(AND)
             }
-            append(expr)
+            ret.append(sql)
         }
-        append(")")
+        return ret
     }
     
     public func assemble() -> String {
@@ -55,6 +63,13 @@ public class SQLStmt: ArrayLiteralConvertible {
         child.parentStmt = self
         child.leftStmt = self.childrenStmt.last
         self.childrenStmt.append(child)
+        return self
+    }
+    
+    public func append(sqls: [SQLStmt]) -> Self {
+        sqls.forEach { sql in
+            append(sql)
+        }
         return self
     }
     
@@ -95,24 +110,15 @@ public extension SQLStmt {
 public extension SQLStmt {
     
     public func where_(expressions: SQLStmt...) -> Self {
-        append("WHERE", params: [])
-        for (index, expr) in expressions.enumerate() {
-            if index != 0  && (!expressions[index - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
-                append(and())
-            }
-            append(expr)
-            
-        }
-        return self
+        return append("WHERE").append(andJoined(expressions))
     }
     
     public func not() -> Self {
-        return append("NOT", params: [])
+        return append("NOT")
     }
     
     public func in_(paramArr params: [AnyObject]) -> Self {
-        append("IN", params: [])
-        return append(enclosed(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
+        return append("IN").append(enclosed(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
     }
     
     public func in_(params: AnyObject...) -> Self {
@@ -120,7 +126,7 @@ public extension SQLStmt {
     }
     
     public func like() -> Self {
-        return append("LIKE", params: [])
+        return append("LIKE")
     }
     
     public func like(value: AnyObject) -> Self {
@@ -132,7 +138,7 @@ public extension SQLStmt {
     }
     
     public func glob() -> Self {
-        return append("GLOB", params: [])
+        return append("GLOB")
     }
     
     public func glob(value: AnyObject) -> Self {
@@ -144,7 +150,7 @@ public extension SQLStmt {
     }
     
     public func match() -> Self {
-        return append("MATCH", params: [])
+        return append("MATCH")
     }
     
     public func match(value: AnyObject) -> Self {
@@ -156,7 +162,7 @@ public extension SQLStmt {
     }
     
     public func regex() -> Self {
-        return append("REGEXP", params: [])
+        return append("REGEXP")
     }
     
     public func regex(value: AnyObject) -> Self {
