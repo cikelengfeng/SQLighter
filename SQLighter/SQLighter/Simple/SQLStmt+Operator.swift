@@ -56,7 +56,18 @@ public extension SQLStmt {
         return self.append(pureSQL)
     }
     
-    public func in_(params: [AnyObject]) -> Self {
+    public func in_(paramArr params: [AnyObject]) -> Self {
+        let keyword = SQLStmt("IN", params: [])
+        self.append(keyword)
+        let leftBracket = SQLStmt("(", params: [])
+        self.append(leftBracket)
+        let pureSQL = SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)
+        self.append(pureSQL)
+        let rightBracket = SQLStmt(")", params: [])
+        return self.append(rightBracket)
+    }
+    
+    public func in_(params: AnyObject...) -> Self {
         let keyword = SQLStmt("IN", params: [])
         self.append(keyword)
         let leftBracket = SQLStmt("(", params: [])

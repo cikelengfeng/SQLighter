@@ -7,20 +7,16 @@ public enum Order: String {
 
 public class SimpleSelect: SQLStmt {
 
-    public init() {
-        super.init("", params: [])
-    }
-    
     public func select(expr: String) -> Self {
-        let pureSQL = SQLStmt("SELECT " + expr, params: [])
-        return self.append(pureSQL)
+        return self.append("SELECT " + expr, params: [])
     }
     
-    public func select(columns: [String]) -> Self {
-        let keyword = SQLStmt("SELECT", params: [])
-        self.append(keyword)
-        let pureSQL = SQLStmt((columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
-        return self.append(pureSQL)
+    public func select(columnArr columns: [String]) -> Self {
+        return self.append("SELECT " + (columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
+    }
+    
+    public func select(columns: String...) -> Self {
+        return select(columnArr: columns)
     }
     
     public func from(expr: String) -> Self {
