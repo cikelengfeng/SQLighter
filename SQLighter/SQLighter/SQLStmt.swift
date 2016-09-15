@@ -15,6 +15,10 @@ public class SQLStmt {
         self.childrenStmt = []
     }
     
+    public convenience init() {
+        self.init("", params: [])
+    }
+    
     public func assemble() -> String {
         if self.childrenStmt.count == 0 {
             return self.baseSQL
