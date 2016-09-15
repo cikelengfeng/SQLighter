@@ -63,7 +63,8 @@ print(update.assemble())
 
 let delete = SimpleDelete()
 delete
-    .delete("tbl_medias")
+    .delete()
+    .from("tbl_medias")
     .where_(
             enclosed(
                 id("a") == "x",

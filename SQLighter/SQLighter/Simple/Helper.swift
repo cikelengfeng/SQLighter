@@ -17,26 +17,21 @@ public func value(v: AnyObject) -> SQLStmt {
 }
 
 public func enclosed(expressions: SQLStmt...) -> SQLStmt {
-    let exclosed = SQLStmt("", params: [])
-    let leftBracket = SQLStmt("(", params: [])
-    exclosed.append(leftBracket)
+    let enclosed = SQLStmt("", params: [])
+    enclosed.append("(", params: [])
     for expr in expressions {
-        exclosed.append(expr)
+        enclosed.append(expr)
     }
-    let rightBracket = SQLStmt(")", params: [])
-    return exclosed.append(rightBracket)
+    return enclosed.append(")", params: [])
 }
 
 public func enclosed(expressions: [SQLStmt]) -> SQLStmt {
-    let exclosed = SQLStmt("", params: [])
-    let leftBracket = SQLStmt("(", params: [])
-    exclosed.append(leftBracket)
+    let enclosed = SQLStmt("", params: [])
+    enclosed.append("(", params: [])
     for expr in expressions {
-        exclosed.append(expr)
+        enclosed.append(expr)
     }
-    let rightBracket = SQLStmt(")", params: [])
-    return exclosed.append(rightBracket)
-}
+    return enclosed.append(")", params: [])}
 
 public func and() -> SQLStmt {
     let pureSQL = SQLStmt("AND", params: [])

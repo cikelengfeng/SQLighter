@@ -8,11 +8,11 @@ public enum Order: String {
 public class SimpleSelect: SQLStmt {
 
     public func select(expr: String) -> Self {
-        return self.append("SELECT " + expr, params: [])
+        return append("SELECT " + expr, params: [])
     }
     
     public func select(columnArr columns: [String]) -> Self {
-        return self.append("SELECT " + (columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
+        return append("SELECT " + (columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
     }
     
     public func select(columns: String...) -> Self {
@@ -20,31 +20,25 @@ public class SimpleSelect: SQLStmt {
     }
     
     public func from(expr: String) -> Self {
-        let pureSQL = SQLStmt("FROM ?", params: [expr])
-        return self.append(pureSQL)
+        return append("FROM ?", params: [expr])
     }
     
     public func orderBy(orders: [(String, Order)]) -> Self {
-        let keyword = SQLStmt("ORDER BY", params: [])
-        self.append(keyword)
+        append("ORDER BY", params: [])
         for (index, (column, order)) in orders.enumerate() {
             if index > 0 {
-                let comma = SQLStmt(",", params: [])
-                self.append(comma)
+                append(",", params: [])
             }
-            let order = SQLStmt("? " + order.rawValue, params: [column])
-            self.append(order)
+            append("? " + order.rawValue, params: [column])
         }
         return self
     }
     
     public func offset(offset: UInt32) -> Self {
-        let pureSQL = SQLStmt("OFFSET ?", params: [NSNumber(unsignedInt: offset)])
-        return self.append(pureSQL)
+        return append("OFFSET ?", params: [NSNumber(unsignedInt: offset)])
     }
     
     public func limit(limit: UInt32) -> Self {
-        let pureSQL = SQLStmt("LIMIT ?", params: [NSNumber(unsignedInt: limit)])
-        return self.append(pureSQL)
+        return append("LIMIT ?", params: [NSNumber(unsignedInt: limit)])
     }
 }
