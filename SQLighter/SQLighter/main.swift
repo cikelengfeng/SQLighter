@@ -12,13 +12,17 @@ let select = SimpleSelect()
                 .select(columnArr: ["c1","c3"])
                 .from("tbl_tags")
                 .where_(
-                    [id("1").like("3"), OR, id("2").glob([id("a") == "x",
-                        id("b") < 1])],
-                        [id("a") == "x",id("b") < 1],
-                        OR,
-                        [id("c") != "ono",
+                        [ID("1").like("3"),
                             OR,
-                            id("d").in_(paramArr: ["1","b","c","123"])])
+                            ID("2").glob([
+                                ID("a") == "x",
+                                ID("b") < 1])],
+                        [ID("a") == "x",
+                            ID("b") < 1],
+                        OR,
+                        [ID("c") != "ono",
+                            OR,
+                            ID("d").in_(paramArr: ["1","b","c","123"])])
                 .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)
@@ -30,15 +34,15 @@ let select2 = SimpleSelect()
                 .select("c1","c3")
                 .from("tbl_tags")
                 .where_(
-                        id("a") == "x",
-                        id("b") < 1,
-                        id("c") != "ono",
-                        id("d").in_(paramArr: ["1","b","c","123"]))
+                        ID("a") == "x",
+                        ID("b") < 1,
+                        ID("c") != "ono",
+                        ID("d").in_(paramArr: ["1","b","c","123"]))
                 .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)
 
-let un = union(select, lhs: select2)
+let un = UNION(select, lhs: select2)
 print(un.assemble())
 print(un.parameters())
 
@@ -60,11 +64,11 @@ update
     .table("tbl_people")
     .set(["c1":"x1","c2":"x2"])
     .where_(
-            id("a") == "x",
-            id("b") < "y",
+            ID("a") == "x",
+            ID("b") < "y",
             OR,
-            id("c") <> "ono",
-            id("d").not().in_("1","b","c","123"))
+            ID("c") <> "ono",
+            ID("d").not().in_("1","b","c","123"))
 print(update.assemble())
 print(update.parameters())
 
@@ -74,12 +78,12 @@ delete
     .delete()
     .from("tbl_medias")
     .where_(
-            [[id("a") == "x",
-            id("x").not().in_("x1","x2")],
-            [id("b") < "y",id("y") & "y1"]],
+            [[ID("a") == "x",
+            ID("x").not().in_("x1","x2")],
+            [ID("b") < "y",ID("y") & "y1"]],
             OR,
-            id("c") <> "ono",
-            id("d").in_("1","b","c","123")
+            ID("c") <> "ono",
+            ID("d").in_("1","b","c","123")
     )
 
 print(delete.assemble())

@@ -32,7 +32,7 @@ public class SQLStmt: ArrayLiteralConvertible {
             append(elements[0])
             return
         }
-        append(enclosed(andJoined(elements)))
+        append(ENCLOSED(andJoined(elements)))
     }
     
     private func andJoined(sqls: [SQLStmt]) -> [SQLStmt] {
@@ -60,6 +60,7 @@ public class SQLStmt: ArrayLiteralConvertible {
     }
     
     public func append(child: SQLStmt) -> Self {
+        assert((self as SQLStmt) !== child, "MUST NOT append self")
         child.parentStmt = self
         child.leftStmt = self.childrenStmt.last
         self.childrenStmt.append(child)
@@ -118,7 +119,7 @@ public extension SQLStmt {
     }
     
     public func in_(paramArr params: [AnyObject]) -> Self {
-        return append("IN").append(enclosed(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
+        return append("IN").append(ENCLOSED(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
     }
     
     public func in_(params: AnyObject...) -> Self {

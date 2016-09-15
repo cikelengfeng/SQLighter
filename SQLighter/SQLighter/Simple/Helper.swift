@@ -8,49 +8,63 @@
 
 import Foundation
 
-public let OR = or()
-public let AND = and()
+public let OR = OR_()
+public let AND = AND_()
 
-public func id(id: String) -> SQLStmt {
+public func ID(id: String) -> SQLStmt {
     return SQLStmt("?", params: [id])
 }
 
-public func value(v: AnyObject) -> SQLStmt {
+public func VALUE(v: AnyObject) -> SQLStmt {
     return SQLStmt("?", params: [v])
 }
 
-public func enclosed(expressions: SQLStmt...) -> SQLStmt {
-    let enclosed = SQLStmt("", params: [])
-    enclosed.append("(", params: [])
+
+public func ENCLOSED(expressions: [SQLStmt]) -> SQLStmt {
+    let enclosed = SQLStmt()
+    enclosed.append("(")
     for expr in expressions {
         enclosed.append(expr)
     }
-    return enclosed.append(")", params: [])
+    return enclosed.append(")")
 }
 
-public func enclosed(expressions: [SQLStmt]) -> SQLStmt {
-    let enclosed = SQLStmt("", params: [])
-    enclosed.append("(", params: [])
-    for expr in expressions {
-        enclosed.append(expr)
-    }
-    return enclosed.append(")", params: [])
+public func ENCLOSED(expressions: SQLStmt...) -> SQLStmt {
+    return ENCLOSED(expressions)
 }
 
-public func and() -> SQLStmt {
-    let pureSQL = SQLStmt("AND", params: [])
+public func ENCLOSED(sql: String, params: [AnyObject]) -> SQLStmt {
+    return ENCLOSED(SQLStmt(sql, params: params))
+}
+
+public func ENCLOSED(sql: String) -> SQLStmt {
+    return ENCLOSED(sql, params: [])
+}
+
+public func AND_() -> SQLStmt {
+    let pureSQL = SQLStmt("AND")
     return pureSQL
 }
 
-public func or() -> SQLStmt {
-    let pureSQL = SQLStmt("OR", params: [])
+public func AND_(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+    let and = SQLStmt()
+    return and.append(rhs).append(AND).append(lhs)
+}
+
+public func OR_() -> SQLStmt {
+    let pureSQL = SQLStmt("OR")
     return pureSQL
 }
 
-public func union(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+public func OR_(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+    let or = SQLStmt()
+    return or.append(rhs).append(OR).append(lhs)
+}
+
+public func UNION(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
     let union = SQLStmt()
-    union.append(enclosed([rhs]))
-    union.append("UNION", params: [])
-    union.append(enclosed([lhs]))
+    union.append(ENCLOSED([rhs]))
+    union.append("UNION")
+    union.append(ENCLOSED([lhs]))
     return union
 }
