@@ -123,16 +123,56 @@ public extension SQLStmt {
         return append("LIKE", params: [])
     }
     
+    public func like(value: AnyObject) -> Self {
+        return like().value(value)
+    }
+    
+    public func like(expr: SQLStmt) -> Self {
+        return like().append(expr)
+    }
+    
     public func glob() -> Self {
         return append("GLOB", params: [])
+    }
+    
+    public func glob(value: AnyObject) -> Self {
+        return glob().value(value)
+    }
+    
+    public func glob(expr: SQLStmt) -> Self {
+        return glob().append(expr)
     }
     
     public func match() -> Self {
         return append("MATCH", params: [])
     }
     
+    public func match(value: AnyObject) -> Self {
+        return match().value(value)
+    }
+    
+    public func match(expr: SQLStmt) -> Self {
+        return match().append(expr)
+    }
+    
     public func regex() -> Self {
         return append("REGEXP", params: [])
+    }
+    
+    public func regex(value: AnyObject) -> Self {
+        return regex().value(value)
+    }
+    
+    public func regex(expr: SQLStmt) -> Self {
+        return regex().append(expr)
+    }
+    
+    public func id(id: String) -> Self {
+        return append("?", params: [id])
+    }
+    
+    public func value(v: AnyObject) -> Self {
+        return append("?", params: [v])
     }
 }
 

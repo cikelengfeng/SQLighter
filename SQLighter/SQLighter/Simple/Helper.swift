@@ -8,6 +8,9 @@
 
 import Foundation
 
+public let OR = or()
+public let AND = and()
+
 public func id(id: String) -> SQLStmt {
     return SQLStmt("?", params: [id])
 }

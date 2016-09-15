@@ -12,11 +12,12 @@ let select = SimpleSelect()
                 .select(columnArr: ["c1","c3"])
                 .from("tbl_tags")
                 .where_(
-                        [id("1") <> "3"],
+                    [id("1").like("3"), OR, id("2").glob([id("a") == "x",
+                        id("b") < 1])],
                         [id("a") == "x",id("b") < 1],
-                        or(),
+                        OR,
                         [id("c") != "ono",
-                            or(),
+                            OR,
                             id("d").in_(paramArr: ["1","b","c","123"])])
                 .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
@@ -61,7 +62,7 @@ update
     .where_(
             id("a") == "x",
             id("b") < "y",
-            or(),
+            OR,
             id("c") <> "ono",
             id("d").not().in_("1","b","c","123"))
 print(update.assemble())
@@ -76,7 +77,7 @@ delete
             [[id("a") == "x",
             id("x").not().in_("x1","x2")],
             [id("b") < "y",id("y") & "y1"]],
-            or(),
+            OR,
             id("c") <> "ono",
             id("d").in_("1","b","c","123")
     )
