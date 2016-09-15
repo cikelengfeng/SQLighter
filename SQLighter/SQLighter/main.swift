@@ -14,9 +14,7 @@ let select = SimpleSelect()
                 .where_(
                         [ID("1").like("3"),
                             OR,
-                            ID("2").glob([
-                                ID("a") == "x",
-                                ID("b") < 1])],
+                            ID("2").not().in_("x", 1, 3)],
                         [ID("a") == "x",
                             ID("b") < 1],
                         OR,
@@ -42,7 +40,7 @@ let select2 = SimpleSelect()
                 .offset(42)
                 .limit(22)
 
-let un = UNION(select, lhs: select2)
+let un = UNION(select, rhs: select2)
 print(un.assemble())
 print(un.parameters())
 
