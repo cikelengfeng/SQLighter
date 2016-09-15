@@ -14,7 +14,7 @@ public extension SQLStmt {
         return self.append(pureSQL)
     }
     
-    public func wherec(expressions: SQLStmtGroup...) -> Self {
+    public func where_(expressions: SQLStmtGroup...) -> Self {
         let pureSQL = SQLStmt("WHERE", params: [])
         self.append(pureSQL)
         for exprGroup in expressions {
@@ -38,12 +38,25 @@ public extension SQLStmt {
         return self
     }
     
+    public func where_(expressions: SQLStmt...) -> Self {
+        let pureSQL = SQLStmt("WHERE", params: [])
+        self.append(pureSQL)
+        for (index, expr) in expressions.enumerate() {
+                if index != 0  && (!expressions[index - 1].assemble().containsString("OR"))  && (!expr.assemble().containsString("OR")) {
+                    self.append(and())
+                }
+            self.append(expr)
+            
+        }
+        return self
+    }
+    
     public func not() -> Self {
         let pureSQL = SQLStmt("NOT", params: [])
         return self.append(pureSQL)
     }
     
-    public func inSet(params: [AnyObject]) -> Self {
+    public func in_(params: [AnyObject]) -> Self {
         let keyword = SQLStmt("IN", params: [])
         self.append(keyword)
         let leftBracket = SQLStmt("(", params: [])
