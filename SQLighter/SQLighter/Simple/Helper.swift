@@ -46,9 +46,9 @@ public func AND_() -> SQLStmt {
     return pureSQL
 }
 
-public func AND_(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+public func AND_(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let and = SQLStmt()
-    return and.append(rhs).append(AND).append(lhs)
+    return and.append(lhs).append(AND).append(rhs)
 }
 
 public func OR_() -> SQLStmt {
@@ -56,15 +56,15 @@ public func OR_() -> SQLStmt {
     return pureSQL
 }
 
-public func OR_(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+public func OR_(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let or = SQLStmt()
-    return or.append(rhs).append(OR).append(lhs)
+    return or.append(lhs).append(OR).append(rhs)
 }
 
-public func UNION(rhs: SQLStmt, lhs: SQLStmt) -> SQLStmt {
+public func UNION(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let union = SQLStmt()
-    union.append(ENCLOSED([rhs]))
-    union.append("UNION")
     union.append(ENCLOSED([lhs]))
+    union.append("UNION")
+    union.append(ENCLOSED([rhs]))
     return union
 }
