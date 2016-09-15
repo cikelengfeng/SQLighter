@@ -27,7 +27,7 @@ public extension SQLStmt {
             }
             var enclosedExpr = [SQLStmt]()
             for (innerIndex, expr) in exprGroup.statements().enumerate() {
-                if innerIndex != 0  && (!exprGroup.statements()[innerIndex - 1].assemble().containsString("OR"))  && (!expr.assemble().containsString("OR")) {
+                if innerIndex != 0  && (!exprGroup.statements()[innerIndex - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
                     enclosedExpr.append(and())
                 }
                 enclosedExpr.append(expr)
@@ -42,7 +42,7 @@ public extension SQLStmt {
         let pureSQL = SQLStmt("WHERE", params: [])
         self.append(pureSQL)
         for (index, expr) in expressions.enumerate() {
-                if index != 0  && (!expressions[index - 1].assemble().containsString("OR"))  && (!expr.assemble().containsString("OR")) {
+                if index != 0  && (!expressions[index - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
                     self.append(and())
                 }
             self.append(expr)
