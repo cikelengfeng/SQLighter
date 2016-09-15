@@ -12,20 +12,3 @@ public protocol SQLStmtGroup {
     
     func statements() -> [SQLStmt]
 }
-
-public class SQLEnclosedStmt: SQLStmt, SQLStmtGroup, ArrayLiteralConvertible {
-
-    init(arrayLiteral elements: Self.Element...) {
-        self.append(enclosed(elements))
-        super.init("", [])
-    }
-
-    
-}
-
-extension SQLStmt: SQLStmtGroup {
-    public func statements() -> [SQLStmt] {
-        return [self]
-    }
-}
-
