@@ -31,7 +31,8 @@ public func enclosed(expressions: [SQLStmt]) -> SQLStmt {
     for expr in expressions {
         enclosed.append(expr)
     }
-    return enclosed.append(")", params: [])}
+    return enclosed.append(")", params: [])
+}
 
 public func and() -> SQLStmt {
     let pureSQL = SQLStmt("AND", params: [])

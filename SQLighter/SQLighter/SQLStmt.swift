@@ -1,6 +1,6 @@
 import Foundation
 
-public class SQLStmt {
+public class SQLStmt: ArrayLiteralConvertible {
     
     private var childrenStmt: [SQLStmt]
     internal weak var parentStmt: SQLStmt?
@@ -17,6 +17,25 @@ public class SQLStmt {
     
     public convenience init() {
         self.init("", params: [])
+    }
+    
+    required public convenience init(arrayLiteral elements: SQLStmt...) {
+        self.init()
+        if elements.count == 0 {
+            return
+        }
+        if elements.count == 1 {
+            append(elements[0])
+            return
+        }
+        append("(")
+        for (index, expr) in elements.enumerate() {
+            if index != 0  && (!elements[index - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
+                append(and())
+            }
+            append(expr)
+        }
+        append(")")
     }
     
     public func assemble() -> String {
@@ -70,6 +89,50 @@ public extension SQLStmt {
         copy.parentStmt = self.parentStmt
         copy.leftStmt = self.leftStmt
         return copy
+    }
+}
+
+public extension SQLStmt {
+    
+    public func where_(expressions: SQLStmt...) -> Self {
+        append("WHERE", params: [])
+        for (index, expr) in expressions.enumerate() {
+            if index != 0  && (!expressions[index - 1].assemble().hasSuffix("OR"))  && (!expr.assemble().hasSuffix("OR")) {
+                append(and())
+            }
+            append(expr)
+            
+        }
+        return self
+    }
+    
+    public func not() -> Self {
+        return append("NOT", params: [])
+    }
+    
+    public func in_(paramArr params: [AnyObject]) -> Self {
+        append("IN", params: [])
+        return append(enclosed(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
+    }
+    
+    public func in_(params: AnyObject...) -> Self {
+        return in_(paramArr: params)
+    }
+    
+    public func like() -> Self {
+        return append("LIKE", params: [])
+    }
+    
+    public func glob() -> Self {
+        return append("GLOB", params: [])
+    }
+    
+    public func match() -> Self {
+        return append("MATCH", params: [])
+    }
+    
+    public func regex() -> Self {
+        return append("REGEXP", params: [])
     }
 }
 

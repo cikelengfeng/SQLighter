@@ -69,8 +69,9 @@ delete
     .delete()
     .from("tbl_medias")
     .where_(
-            id("a") == "x",
-            id("b") < "y",
+            [[id("a") == "x",
+            id("x").not().in_("x1","x2")],
+            id("b") < "y"],
             or(),
             id("c") <> "ono",
             id("d").in_("1","b","c","123")
