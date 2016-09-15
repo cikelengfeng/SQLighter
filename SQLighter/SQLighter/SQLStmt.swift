@@ -35,17 +35,6 @@ public class SQLStmt: ArrayLiteralConvertible {
         append(ENCLOSED(andJoined(elements)))
     }
     
-    private func andJoined(sqls: [SQLStmt]) -> [SQLStmt] {
-        var ret = [SQLStmt]()
-        for (index, sql) in sqls.enumerate() {
-            if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
-                ret.append(AND)
-            }
-            ret.append(sql)
-        }
-        return ret
-    }
-    
     public func assemble() -> String {
         if self.childrenStmt.count == 0 {
             return self.baseSQL
@@ -94,6 +83,22 @@ public class SQLStmt: ArrayLiteralConvertible {
     
     public func left() -> SQLStmt? {
         return self.leftStmt
+    }
+    
+    private func andJoined(sqls: [SQLStmt]) -> [SQLStmt] {
+        var ret = [SQLStmt]()
+        for (index, sql) in sqls.enumerate() {
+            if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
+                ret.append(AND)
+            }
+            ret.append(sql)
+        }
+        return ret
+    }
+    
+    private func estimateRetainCycleAfterAppend(sql: SQLStmt) -> Bool {
+        //TODO: impl
+        return false
     }
 }
 
