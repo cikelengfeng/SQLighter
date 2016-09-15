@@ -185,12 +185,3 @@ func != (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(rhs)
 }
 
-infix operator &&& { associativity left precedence 246 }
-func &&& (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
-    return enclosed(lhs, and(), rhs)
-}
-
-infix operator ||| { associativity left precedence 246 }
-func ||| (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
-    return enclosed(lhs, or(), rhs)
-}
