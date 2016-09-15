@@ -12,8 +12,12 @@ let select = SimpleSelect()
                 .select(columnArr: ["c1","c3"])
                 .from("tbl_tags")
                 .where_(
-                        (id("a") == "x") &&& (id("b") < 1),
-                        (id("c") != "ono") ||| id("d").in_(paramArr: ["1","b","c","123"]))
+                        [id("1") <> "3"],
+                        [id("a") == "x",id("b") < 1],
+                        or(),
+                        [id("c") != "ono",
+                            or(),
+                            id("d").in_(paramArr: ["1","b","c","123"])])
                 .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)
@@ -71,7 +75,7 @@ delete
     .where_(
             [[id("a") == "x",
             id("x").not().in_("x1","x2")],
-            id("b") < "y"],
+            [id("b") < "y",id("y") & "y1"]],
             or(),
             id("c") <> "ono",
             id("d").in_("1","b","c","123")
