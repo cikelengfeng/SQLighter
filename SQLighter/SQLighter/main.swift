@@ -12,15 +12,15 @@ let select = SimpleSelect()
                 .select(columnArr: ["c1","c3"])
                 .from("tbl_tags")
                 .where_(
-                        [ID("1").like("3"),
-                            OR,
-                            ID("2").not().in_("x", 1, 3)],
-                        [ID("a") == "x",
-                            ID("b") < 1],
+                        [User.name.like("3"),
+                        OR,
+                        User.id.not().in_("x", 1, 3)],
+                        [User.creationDate == "x",
+                        User.id < 1],
                         OR,
                         [ID("c") != "ono",
-                            OR,
-                            ID("d").in_(paramArr: ["1","b","c","123"])])
+                        OR,
+                        ID("d").in_(paramArr: ["1","b","c","123"])])
                 .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)

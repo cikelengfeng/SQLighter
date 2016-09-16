@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4243FB1A1D8BBD2A00EA384C /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243FB191D8BBD2A00EA384C /* Table.swift */; };
 		42A87EC81D8591D400258522 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87EC71D8591D400258522 /* main.swift */; };
 		42A87ED71D85921E00258522 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED01D85921E00258522 /* Operators.swift */; };
 		42A87ED91D85921E00258522 /* SimpleDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED21D85921E00258522 /* SimpleDelete.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4243FB191D8BBD2A00EA384C /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		42A87EC41D8591D400258522 /* SQLighter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SQLighter; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A87EC71D8591D400258522 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		42A87ED01D85921E00258522 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -52,6 +54,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4243FB181D8BBD0A00EA384C /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				4243FB191D8BBD2A00EA384C /* Table.swift */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
 		42A87EBB1D8591D300258522 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +90,7 @@
 		42A87ECE1D85920F00258522 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4243FB181D8BBD0A00EA384C /* Test */,
 				42A87ECF1D85921E00258522 /* Simple */,
 				42A87ED61D85921E00258522 /* SQLStmt.swift */,
 			);
@@ -159,6 +170,7 @@
 				42A87EDD1D85921E00258522 /* SQLStmt.swift in Sources */,
 				42A87EDF1D85931200258522 /* Helper.swift in Sources */,
 				42A87EDA1D85921E00258522 /* SimpleInsert.swift in Sources */,
+				4243FB1A1D8BBD2A00EA384C /* Table.swift in Sources */,
 				42A87EC81D8591D400258522 /* main.swift in Sources */,
 				42A87EDC1D85921E00258522 /* SimpleUpdate.swift in Sources */,
 				42A87EDB1D85921E00258522 /* SimpleSelect.swift in Sources */,
