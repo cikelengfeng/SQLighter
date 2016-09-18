@@ -7,10 +7,6 @@ public enum Order: String {
 
 public class SimpleSelect: SQLStmt {
 
-    public func select(sql: String) -> Self {
-        return append("SELECT " + sql, params: [])
-    }
-    
     public func select(columnArr columns: [String]) -> Self {
         return append("SELECT " + (columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
     }
@@ -27,7 +23,18 @@ public class SimpleSelect: SQLStmt {
         return append("FROM ?", params: [expr])
     }
     
-    public func orderBy(orders: [(String, Order)]) -> Self {
+    public func orderBy(orderArr orders: [(String, Order)]) -> Self {
+        append("ORDER BY")
+        for (index, (column, order)) in orders.enumerate() {
+            if index > 0 {
+                append(",")
+            }
+            append("? " + order.rawValue, params: [column])
+        }
+        return self
+    }
+    
+    public func orderBy(orders: (String, Order)...) -> Self {
         append("ORDER BY")
         for (index, (column, order)) in orders.enumerate() {
             if index > 0 {

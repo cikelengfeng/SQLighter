@@ -9,7 +9,7 @@
 import Foundation
 
 let select = SimpleSelect()
-                .select(columnArr: ["c1","c3"])
+                .select("*")
                 .from("tbl_tags")
                 .where_(
                         [User.name.like("3"),
@@ -21,7 +21,7 @@ let select = SimpleSelect()
                         [ID("c") != "ono",
                         OR,
                         ID("d").in_(paramArr: ["1","b","c","123"])])
-                .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
+                .orderBy(("c1", Order.ASC), ("c2", Order.DESC))
                 .offset(42)
                 .limit(22)
 
@@ -36,7 +36,7 @@ let select2 = SimpleSelect()
                         ID("b") < 1,
                         ID("c") != "ono",
                         ID("d").in_(paramArr: ["1","b","c","123"]))
-                .orderBy([("c1", Order.ASC), ("c2", Order.DESC)])
+                .orderBy(orderArr: [("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)
 
