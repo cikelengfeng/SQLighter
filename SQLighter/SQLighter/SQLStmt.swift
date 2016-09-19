@@ -9,7 +9,7 @@ public class SQLStmt: ArrayLiteralConvertible {
     private let baseSQL: String
     private let baseParams: [AnyObject]
     
-    public init(_ sql: String, params: [AnyObject]) {
+    required public init(_ sql: String, params: [AnyObject]) {
         self.baseSQL = sql
         self.baseParams = params
         self.childrenStmt = []
@@ -103,9 +103,8 @@ public class SQLStmt: ArrayLiteralConvertible {
 }
 
 public extension SQLStmt {
-    
-    func copy() -> SQLStmt {
-        let copy = SQLStmt(self.baseSQL, params: self.baseParams)
+    func copy() -> Self {
+        let copy = self.dynamicType.init(self.baseSQL, params: self.baseParams)
         copy.childrenStmt = self.childrenStmt
         copy.parentStmt = self.parentStmt
         copy.leftStmt = self.leftStmt
