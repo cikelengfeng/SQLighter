@@ -8,7 +8,7 @@
 
 import Foundation
 
-let select = SimpleSelect()
+let select = SQLStmt()
                 .select("*")
                 .from("tbl_tags")
                 .where_(
@@ -28,14 +28,14 @@ let select = SimpleSelect()
 print(select.assemble())
 print(select.parameters())
 
-let select2 = SimpleSelect()
+let select2 = SQLStmt()
                 .select("c1","c3")
                 .from("tbl_tags")
                 .where_(
                         ID("a") == "x",
                         ID("b") < 1,
                         ID("c") != "ono",
-                        ID("d").in_(paramArr: ["1","b","c","123"]))
+                        ID("d").in_("1","b","c", 123))
                 .orderBy(orderArr: [("c1", Order.ASC), ("c2", Order.DESC)])
                 .offset(42)
                 .limit(22)
@@ -44,9 +44,7 @@ let un = UNION(select, rhs: select2)
 print(un.assemble())
 print(un.parameters())
 
-let insert = SimpleInsert()
-
-insert
+let insert = SQLStmt()
     .insert()
     .table("tbl_tags")
     .columns(["c1","c2"])
@@ -55,9 +53,7 @@ insert
 print(insert.assemble())
 print(insert.parameters())
 
-let update = SimpleUpdate()
-
-update
+let update = SQLStmt()
     .update()
     .table("tbl_people")
     .set(["c1":"x1","c2":"x2"])
@@ -71,8 +67,7 @@ print(update.assemble())
 print(update.parameters())
 
 
-let delete = SimpleDelete()
-delete
+let delete = SQLStmt()
     .delete()
     .from("tbl_medias")
     .where_(

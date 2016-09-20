@@ -1,99 +1,71 @@
 import Foundation
 
-public class SQLStmt: ArrayLiteralConvertible {
-    
-    private var childrenStmt: [SQLStmt]
-    internal weak var parentStmt: SQLStmt?
-    internal weak var leftStmt: SQLStmt?
+public struct SQLStmt: ArrayLiteralConvertible {
     
     private let baseSQL: String
     private let baseParams: [AnyObject]
     
-    required public init(_ sql: String, params: [AnyObject]) {
+    public init(_ sql: String, params: [AnyObject]) {
         self.baseSQL = sql
         self.baseParams = params
-        self.childrenStmt = []
     }
     
-    public convenience init() {
+    public init() {
         self.init("", params: [])
     }
     
-    public convenience init(_ sql: String) {
+    public init(_ sql: String) {
         self.init(sql, params: [])
     }
     
-    required public convenience init(arrayLiteral elements: SQLStmt...) {
-        self.init()
+    public init(arrayLiteral elements: SQLStmt...) {
         if elements.count == 0 {
+            self.init()
             return
         }
+        var stmt = SQLStmt()
         if elements.count == 1 {
-            append(elements[0])
-            return
+            stmt = stmt.append(elements[0])
+        } else {
+            stmt = stmt.append(ENCLOSED(AND_JOINED(elements)))
         }
-        append(ENCLOSED(andJoined(elements)))
+        self.init(stmt.baseSQL, params: stmt.baseParams)
     }
     
     public func assemble() -> String {
-        if self.childrenStmt.count == 0 {
-            return self.baseSQL
-        }
-        let prefix = self.baseSQL.characters.count == 0 ? "" : self.baseSQL + " "
-        let ret = prefix + ((self.childrenStmt.map { $0.assemble() }).joinWithSeparator(" "))
-        return ret
+        return baseSQL
     }
     
     public func parameters() -> [AnyObject] {
-        return self.baseParams + self.childrenStmt.reduce([], combine: { $0 + $1.parameters() })
+        return self.baseParams
     }
     
-    public func append(child: SQLStmt) -> Self {
-        assert((self as SQLStmt) !== child, "MUST NOT append self")
-        child.parentStmt = self
-        child.leftStmt = self.childrenStmt.last
-        self.childrenStmt.append(child)
-        return self
-    }
-    
-    public func append(sqls: [SQLStmt]) -> Self {
-        sqls.forEach { sql in
-            append(sql)
+    public func append(child: SQLStmt) -> SQLStmt {
+        var sql = ""
+        if self.baseSQL.characters.count * child.baseSQL.characters.count == 0 {
+            sql = self.baseSQL + child.baseSQL
+        }else {
+            sql = self.baseSQL + " " + child.baseSQL
         }
-        return self
+        return SQLStmt(sql, params: self.baseParams + child.baseParams)
     }
     
-    public func append(pureSQL: String) -> Self {
-        let pureSQL = SQLStmt(pureSQL, params: [])
-        return self.append(pureSQL)
-    }
-    
-    public func append(pureSQL: String, params: [AnyObject]) -> Self {
-        let pureSQL = SQLStmt(pureSQL, params: params)
-        return self.append(pureSQL)
-    }
-    
-    internal func children() -> [SQLStmt] {
-        return self.childrenStmt
-    }
-    
-    public func parent() -> SQLStmt? {
-        return self.parentStmt
-    }
-    
-    public func left() -> SQLStmt? {
-        return self.leftStmt
-    }
-    
-    private func andJoined(sqls: [SQLStmt]) -> [SQLStmt] {
-        var ret = [SQLStmt]()
-        for (index, sql) in sqls.enumerate() {
-            if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
-                ret.append(AND)
-            }
-            ret.append(sql)
+    public func append(sqls: [SQLStmt]) -> SQLStmt {
+        var ret = SQLStmt(self.baseSQL, params: self.baseParams)
+        for sql in sqls {
+            ret = ret.append(sql)
         }
         return ret
+    }
+    
+    public func append(pureSQL: String) -> SQLStmt {
+        let pureSQL = SQLStmt(pureSQL, params: [])
+        return append(pureSQL)
+    }
+    
+    public func append(pureSQL: String, params: [AnyObject]) -> SQLStmt {
+        let pureSQL = SQLStmt(pureSQL, params: params)
+        return append(pureSQL)
     }
     
     private func estimateRetainCycleAfterAppend(sql: SQLStmt) -> Bool {
@@ -103,86 +75,76 @@ public class SQLStmt: ArrayLiteralConvertible {
 }
 
 public extension SQLStmt {
-    func copy() -> Self {
-        let copy = self.dynamicType.init(self.baseSQL, params: self.baseParams)
-        copy.childrenStmt = self.childrenStmt
-        copy.parentStmt = self.parentStmt
-        copy.leftStmt = self.leftStmt
-        return copy
-    }
-}
-
-public extension SQLStmt {
     
-    public func where_(expressions: SQLStmt...) -> Self {
-        return append("WHERE").append(andJoined(expressions))
+    public func where_(expressions: SQLStmt...) -> SQLStmt {
+        return append("WHERE").append(AND_JOINED(expressions))
     }
     
-    public func not() -> Self {
+    public func not() -> SQLStmt {
         return append("NOT")
     }
     
-    public func in_(paramArr params: [AnyObject]) -> Self {
+    public func in_(paramArr params: [AnyObject]) -> SQLStmt {
         return append("IN").append(ENCLOSED(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
     }
     
-    public func in_(params: AnyObject...) -> Self {
+    public func in_(params: AnyObject...) -> SQLStmt {
         return in_(paramArr: params)
     }
     
-    public func like() -> Self {
+    public func like() -> SQLStmt {
         return append("LIKE")
     }
     
-    public func like(value: AnyObject) -> Self {
+    public func like(value: AnyObject) -> SQLStmt {
         return like().value(value)
     }
     
-    public func like(expr: SQLStmt) -> Self {
+    public func like(expr: SQLStmt) -> SQLStmt {
         return like().append(expr)
     }
     
-    public func glob() -> Self {
+    public func glob() -> SQLStmt {
         return append("GLOB")
     }
     
-    public func glob(value: AnyObject) -> Self {
+    public func glob(value: AnyObject) -> SQLStmt {
         return glob().value(value)
     }
     
-    public func glob(expr: SQLStmt) -> Self {
+    public func glob(expr: SQLStmt) -> SQLStmt {
         return glob().append(expr)
     }
     
-    public func match() -> Self {
+    public func match() -> SQLStmt {
         return append("MATCH")
     }
     
-    public func match(value: AnyObject) -> Self {
+    public func match(value: AnyObject) -> SQLStmt {
         return match().value(value)
     }
     
-    public func match(expr: SQLStmt) -> Self {
+    public func match(expr: SQLStmt) -> SQLStmt {
         return match().append(expr)
     }
     
-    public func regex() -> Self {
+    public func regex() -> SQLStmt {
         return append("REGEXP")
     }
     
-    public func regex(value: AnyObject) -> Self {
+    public func regex(value: AnyObject) -> SQLStmt {
         return regex().value(value)
     }
     
-    public func regex(expr: SQLStmt) -> Self {
+    public func regex(expr: SQLStmt) -> SQLStmt {
         return regex().append(expr)
     }
     
-    public func id(id: String) -> Self {
+    public func id(id: String) -> SQLStmt {
         return append("?", params: [id])
     }
     
-    public func value(v: AnyObject) -> Self {
+    public func value(v: AnyObject) -> SQLStmt {
         return append("?", params: [v])
     }
 }

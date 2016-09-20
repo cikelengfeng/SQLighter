@@ -1,12 +1,13 @@
 import Foundation
 
-public class SimpleDelete: SQLStmt {
+public extension SQLStmt {
     
-    public func delete() -> Self {
-        return append("DELETE")
+    public func delete() -> SQLStmt {
+        let ret = append("DELETE")
+        return ret
     }
     
-    public func from(expr: String) -> Self {
+    public func from(expr: String) -> SQLStmt {
         return append("FROM").id(expr)
     }
     

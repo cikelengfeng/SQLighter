@@ -1,34 +1,21 @@
 import Foundation
 
-public class SimpleInsert: SQLStmt {
+public extension SQLStmt {
     
-    public func insert() -> Self {
+    public func insert() -> SQLStmt {
         return append("INSERT INTO")
     }
     
-    public func replace() -> Self {
+    public func replace() -> SQLStmt {
         return append("REPLACE INTO")
     }
     
-    public func table(name: String) -> Self {
-        return id(name)
-    }
-    
-    public func columns(columns: [String]) -> Self {
-        let sqls: [SQLStmt] = ((columns.map { col -> [SQLStmt] in
-            if let last = columns.last where col == last {
-                return [ID(col)]
-            }
-            return [ID(col),SQLStmt(",")]
-        }).flatMap { $0 })
-        return append(ENCLOSED(sqls))
-    }
-    
-    public func values(values: [[AnyObject]]) -> Self {
-        append("VALUES")
+    public func values(values: [[AnyObject]]) -> SQLStmt {
+        var stmts = [SQLStmt]()
+        stmts.append(SQLStmt("VALUES"))
         for (index, oneRow) in values.enumerate() {
             if index > 0 {
-                append(",")
+                stmts.append(SQLStmt(","))
             }
             
             let sqls: [SQLStmt] = ((oneRow.map { val -> [SQLStmt] in
@@ -37,8 +24,8 @@ public class SimpleInsert: SQLStmt {
                 }
                 return [VALUE(val),SQLStmt(",")]
                 }).flatMap { $0 })
-            append(ENCLOSED(sqls))
+            stmts.append(ENCLOSED(sqls))
         }
-        return self
+        return append(stmts)
     }
 }

@@ -12,19 +12,19 @@ public let OR = OR_()
 public let AND = AND_()
 
 public func ID(id: String) -> SQLStmt {
-    return SQLStmt("?", params: [id])
+    return SQLStmt().id(id)
 }
 
 public func VALUE(v: AnyObject) -> SQLStmt {
-    return SQLStmt("?", params: [v])
+    return SQLStmt().value(v)
 }
 
 
 public func ENCLOSED(expressions: [SQLStmt]) -> SQLStmt {
-    let enclosed = SQLStmt()
-    enclosed.append("(")
+    var enclosed = SQLStmt()
+    enclosed = enclosed.append("(")
     for expr in expressions {
-        enclosed.append(expr)
+        enclosed = enclosed.append(expr)
     }
     return enclosed.append(")")
 }
@@ -63,8 +63,16 @@ public func OR_(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
 
 public func UNION(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let union = SQLStmt()
-    union.append(ENCLOSED([lhs]))
-    union.append("UNION")
-    union.append(ENCLOSED([rhs]))
-    return union
+    return union.append(ENCLOSED([lhs])).append("UNION").append(ENCLOSED([rhs]))
+}
+
+internal func AND_JOINED(sqls: [SQLStmt]) -> [SQLStmt] {
+    var ret = [SQLStmt]()
+    for (index, sql) in sqls.enumerate() {
+        if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
+            ret.append(AND)
+        }
+        ret.append(sql)
+    }
+    return ret
 }
