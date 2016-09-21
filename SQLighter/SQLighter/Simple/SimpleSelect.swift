@@ -1,8 +1,9 @@
 import Foundation
 
 public enum Order: String {
-    case DESC
-    case ASC
+    case DESC = "DESC"
+    case ASC = "ASC"
+    case COLLATE_NOCASE = "COLLATE NOCASE"
 }
 
 public extension SQLStmt {
