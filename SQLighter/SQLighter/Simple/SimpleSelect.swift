@@ -9,7 +9,7 @@ public enum Order: String {
 public extension SQLStmt {
 
     public func select(columnArr columns: [String]) -> SQLStmt {
-        return append("SELECT " + (columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns)
+        return append("SELECT " + (columns.map() { "\"" + $0 + "\""}).joinWithSeparator(" , "), params: [])
     }
     
     public func select(columns: String...) -> SQLStmt {
