@@ -141,7 +141,7 @@ public extension SQLStmt {
     }
     
     public func id(id: String) -> SQLStmt {
-        return append("\"" + "\(id)" + "\"", params: [])
+        return append("\"\(id)\"", params: [])
     }
     
     public func value(v: AnyObject) -> SQLStmt {
