@@ -31,7 +31,22 @@ public extension SQLStmt {
         return orderBy
     }
     
+    public func orderBy(orderArr orders: [(SQLStmt, Order)]) -> SQLStmt {
+        var orderBy = append("ORDER BY")
+        for (index, (column, order)) in orders.enumerate() {
+            if index > 0 {
+                orderBy = orderBy.append(",")
+            }
+            orderBy = orderBy.append(column).append(order.rawValue)
+        }
+        return orderBy
+    }
+    
     public func orderBy(orders: (String, Order)...) -> SQLStmt {
+        return orderBy(orderArr: orders)
+    }
+    
+    public func orderBy(orders: (SQLStmt, Order)...) -> SQLStmt {
         return orderBy(orderArr: orders)
     }
     

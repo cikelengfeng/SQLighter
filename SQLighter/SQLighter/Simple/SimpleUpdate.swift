@@ -24,4 +24,14 @@ public extension SQLStmt {
         return append("SET").append(sql, params: params)
     }
     
+    public func set(dict: (SQLStmt, AnyObject)...) -> SQLStmt {
+        let sql = (dict.map { (column, value) -> String in
+            return "\(column.assemble()) = ?"
+            }).joinWithSeparator(" , ")
+        let params = (dict.map({ (column, value) -> [AnyObject] in
+            return column.parameters() + [value]
+        })).flatMap { $0 }
+        return append("SET").append(sql, params: params)
+    }
+    
 }
