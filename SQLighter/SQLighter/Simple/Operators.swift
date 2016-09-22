@@ -1,7 +1,7 @@
 import Foundation
 
 
-infix operator || { associativity left precedence 252 }
+infix operator || { associativity none }
 func || (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("||").value(rhs)
@@ -12,7 +12,7 @@ func || (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("||").append(rhs)
 }
 
-infix operator * { associativity left precedence 251 }
+infix operator * { associativity none }
 func * (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("*").value(rhs)
@@ -23,7 +23,7 @@ func * (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("*").append(rhs)
 }
 
-infix operator / { associativity left precedence 251 }
+infix operator / { associativity none }
 func / (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("/").value(rhs)
@@ -34,7 +34,7 @@ func / (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("/").append(rhs)
 }
 
-infix operator % { associativity left precedence 251 }
+infix operator % { associativity none }
 func % (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("%").value(rhs)
@@ -45,7 +45,7 @@ func % (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("%").append(rhs)
 }
 
-infix operator + { associativity left precedence 250 }
+infix operator + { associativity none }
 func + (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("+").value(rhs)
@@ -56,7 +56,7 @@ func + (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("+").append(rhs)
 }
 
-infix operator - { associativity left precedence 250 }
+infix operator - { associativity none }
 func - (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("-").value(rhs)
@@ -67,7 +67,7 @@ func - (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("-").append(rhs)
 }
 
-infix operator << { associativity left precedence 249 }
+infix operator << { associativity none }
 func << (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("<<").value(rhs)
@@ -77,7 +77,7 @@ func << (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("<<").append(rhs)
 }
-infix operator >> { associativity left precedence 249 }
+infix operator >> { associativity none }
 func >> (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append(">>").value(rhs)
@@ -87,7 +87,7 @@ func >> (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append(">>").append(rhs)
 }
-infix operator & { associativity left precedence 249 }
+infix operator & { associativity none }
 func & (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("&").value(rhs)
@@ -97,7 +97,7 @@ func & (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("&").append(rhs)
 }
-infix operator | { associativity left precedence 249 }
+infix operator | { associativity none }
 func | (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("|").value(rhs)
@@ -108,7 +108,7 @@ func | (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("|").append(rhs)
 }
 
-infix operator < { associativity left precedence 248 }
+infix operator < { associativity none }
 func < (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("<").value(rhs)
@@ -119,7 +119,7 @@ func < (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("<").append(rhs)
 }
 
-infix operator <= { associativity left precedence 248 }
+infix operator <= { associativity none }
 func <= (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("<=").value(rhs)
@@ -130,7 +130,7 @@ func <= (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("<=").append(rhs)
 }
 
-infix operator > { associativity left precedence 248 }
+infix operator > { associativity none }
 func > (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append(">").value(rhs)
@@ -141,7 +141,7 @@ func > (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append(">").append(rhs)
 }
 
-infix operator >= { associativity left precedence 248 }
+infix operator >= { associativity none }
 func >= (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append(">=").value(rhs)
@@ -152,7 +152,7 @@ func >= (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append(">=").append(rhs)
 }
 
-infix operator == { associativity left precedence 247 }
+infix operator == { associativity none }
 func == (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("==").value(rhs)
@@ -163,7 +163,7 @@ func == (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("==").append(rhs)
 }
 
-infix operator <> { associativity left precedence 247 }
+infix operator <> { associativity none}
 func <> (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("<>").value(rhs)
@@ -174,7 +174,7 @@ func <> (lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt{
     return ret.append(lhs).append("<>").append(rhs)
 }
 
-infix operator != { associativity left precedence 247 }
+infix operator != { associativity none }
 func != (lhs: SQLStmt, rhs: AnyObject) -> SQLStmt{
     let ret = SQLStmt()
     return ret.append(lhs).append("!=").value(rhs)
