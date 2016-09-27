@@ -18,8 +18,8 @@ public extension SQLStmt {
                 stmts.append(SQLStmt(","))
             }
             
-            let sqls: [SQLStmt] = ((oneRow.map { val -> [SQLStmt] in
-                if let last = oneRow.last where last === val {
+            let sqls: [SQLStmt] = ((oneRow.enumerate().map { (index, val) -> [SQLStmt] in
+                if index + 1 == oneRow.count {
                     return [VALUE(val)]
                 }
                 return [VALUE(val),SQLStmt(",")]

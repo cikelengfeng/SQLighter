@@ -11,8 +11,8 @@ public extension SQLStmt {
     }
     
     public func columns(columns: [String]) -> SQLStmt {
-        let sqls: [SQLStmt] = ((columns.map { val -> [SQLStmt] in
-            if let last = columns.last where last == val {
+        let sqls: [SQLStmt] = ((columns.enumerate().map { (index, val) -> [SQLStmt] in
+            if index + 1 == columns.count {
                 return [ID(val)]
             }
             return [ID(val),SQLStmt(",")]
