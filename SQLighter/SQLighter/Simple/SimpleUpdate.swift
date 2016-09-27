@@ -11,7 +11,13 @@ public extension SQLStmt {
     }
     
     public func columns(columns: [String]) -> SQLStmt {
-        return append(ENCLOSED((columns.map { return ID($0) })))
+        let sqls: [SQLStmt] = ((columns.map { val -> [SQLStmt] in
+            if let last = columns.last where last == val {
+                return [ID(val)]
+            }
+            return [ID(val),SQLStmt(",")]
+            }).flatMap { $0 })
+        return append(ENCLOSED(sqls))
     }
     
     public func set(dict: [String: AnyObject]) -> SQLStmt {
