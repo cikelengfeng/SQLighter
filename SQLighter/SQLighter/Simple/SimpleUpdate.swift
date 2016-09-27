@@ -7,11 +7,11 @@ public extension SQLStmt {
     }
     
     public func table(name: String) -> SQLStmt {
-        return append("?", params: [name])
+        return append(ID(name))
     }
     
     public func columns(columns: [String]) -> SQLStmt {
-        return append(ENCLOSED((columns.map() {_ in "?"}).joinWithSeparator(" , "), params: columns))
+        return append(ENCLOSED((columns.map { return ID($0) })))
     }
     
     public func set(dict: [String: AnyObject]) -> SQLStmt {
