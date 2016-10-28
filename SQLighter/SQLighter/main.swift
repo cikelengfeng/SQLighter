@@ -7,7 +7,8 @@
 //
 
 import Foundation
-
+let str = "xxxxxxxxxxxxxxxx"
+let int = 1
 let select = SQLStmt()
                 .select("*")
                 .from("tbl_tags")
@@ -16,7 +17,7 @@ let select = SQLStmt()
                         OR,
                         User.id.not().in_("x", 1, 3)],
                         [User.creationDate == "x",
-                        User.id < 1],
+                        User.id < int],
                         OR,
                         [ID("c") != "ono",
                         OR,

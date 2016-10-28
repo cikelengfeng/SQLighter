@@ -92,6 +92,10 @@ public extension SQLStmt {
         return in_(paramArr: params)
     }
     
+    public func in_(expr: SQLStmt) -> SQLStmt {
+        return append("IN").append(ENCLOSED(expr))
+    }
+    
     public func like() -> SQLStmt {
         return append("LIKE")
     }
