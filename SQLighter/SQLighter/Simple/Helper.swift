@@ -9,6 +9,7 @@
 import Foundation
 
 public let OR = OR_()
+
 public let AND = AND_()
 
 public func ID(id: String) -> SQLStmt {
