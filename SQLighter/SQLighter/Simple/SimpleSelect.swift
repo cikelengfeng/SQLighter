@@ -9,31 +9,31 @@ public enum Order: String {
 public extension SQLStmt {
 
     public func select(columnArr columns: [String]) -> SQLStmt {
-        return append("SELECT " + (columns.map() { "\"" + $0 + "\""}).joinWithSeparator(" , "), params: [])
+        return append("SELECT " + (columns.map() { "\"" + $0 + "\""}).joined(separator: " , "), params: [])
     }
     
-    public func select(columns: String...) -> SQLStmt {
+    public func select(_ columns: String...) -> SQLStmt {
         return select(columnArr: columns)
     }
     
-    public func select(expr: SQLStmt) -> SQLStmt {
+    public func select(_ expr: SQLStmt) -> SQLStmt {
         return append("SELECT").append(expr)
     }
     
     public func orderBy(orderArr orders: [(String, Order)]) -> SQLStmt {
         var orderBy = append("ORDER BY")
-        for (index, (column, order)) in orders.enumerate() {
+        for (index, (column, order)) in orders.enumerated() {
             if index > 0 {
                 orderBy = orderBy.append(",")
             }
-            orderBy = orderBy.append("? " + order.rawValue, params: [column])
+            orderBy = orderBy.append("? " + order.rawValue, params: [column as AnyObject])
         }
         return orderBy
     }
     
     public func orderBy(orderArr orders: [(SQLStmt, Order)]) -> SQLStmt {
         var orderBy = append("ORDER BY")
-        for (index, (column, order)) in orders.enumerate() {
+        for (index, (column, order)) in orders.enumerated() {
             if index > 0 {
                 orderBy = orderBy.append(",")
             }
@@ -42,19 +42,19 @@ public extension SQLStmt {
         return orderBy
     }
     
-    public func orderBy(orders: (String, Order)...) -> SQLStmt {
+    public func orderBy(_ orders: (String, Order)...) -> SQLStmt {
         return orderBy(orderArr: orders)
     }
     
-    public func orderBy(orders: (SQLStmt, Order)...) -> SQLStmt {
+    public func orderBy(_ orders: (SQLStmt, Order)...) -> SQLStmt {
         return orderBy(orderArr: orders)
     }
     
-    public func offset(offset: UInt32) -> SQLStmt {
-        return append("OFFSET").value(NSNumber(unsignedInt: offset))
+    public func offset(_ offset: UInt32) -> SQLStmt {
+        return append("OFFSET").value(NSNumber(value: offset as UInt32))
     }
     
-    public func limit(limit: UInt32) -> SQLStmt {
-        return append("LIMIT").value(NSNumber(unsignedInt: limit))
+    public func limit(_ limit: UInt32) -> SQLStmt {
+        return append("LIMIT").value(NSNumber(value: limit as UInt32))
     }
 }

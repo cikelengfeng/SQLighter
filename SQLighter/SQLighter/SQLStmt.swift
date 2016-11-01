@@ -1,9 +1,9 @@
 import Foundation
 
-public struct SQLStmt: ArrayLiteralConvertible {
+public struct SQLStmt: ExpressibleByArrayLiteral {
     
-    private let baseSQL: String
-    private let baseParams: [AnyObject]
+    fileprivate let baseSQL: String
+    fileprivate let baseParams: [AnyObject]
     
     public init(_ sql: String, params: [AnyObject]) {
         self.baseSQL = sql
@@ -40,7 +40,7 @@ public struct SQLStmt: ArrayLiteralConvertible {
         return self.baseParams
     }
     
-    public func append(child: SQLStmt) -> SQLStmt {
+    public func append(_ child: SQLStmt) -> SQLStmt {
         var sql = ""
         if self.baseSQL.characters.count * child.baseSQL.characters.count == 0 {
             sql = self.baseSQL + child.baseSQL
@@ -50,7 +50,7 @@ public struct SQLStmt: ArrayLiteralConvertible {
         return SQLStmt(sql, params: self.baseParams + child.baseParams)
     }
     
-    public func append(sqls: [SQLStmt]) -> SQLStmt {
+    public func append(_ sqls: [SQLStmt]) -> SQLStmt {
         var ret = SQLStmt(self.baseSQL, params: self.baseParams)
         for sql in sqls {
             ret = ret.append(sql)
@@ -58,17 +58,17 @@ public struct SQLStmt: ArrayLiteralConvertible {
         return ret
     }
     
-    public func append(pureSQL: String) -> SQLStmt {
+    public func append(_ pureSQL: String) -> SQLStmt {
         let pureSQL = SQLStmt(pureSQL, params: [])
         return append(pureSQL)
     }
     
-    public func append(pureSQL: String, params: [AnyObject]) -> SQLStmt {
+    public func append(_ pureSQL: String, params: [AnyObject]) -> SQLStmt {
         let pureSQL = SQLStmt(pureSQL, params: params)
         return append(pureSQL)
     }
     
-    private func estimateRetainCycleAfterAppend(sql: SQLStmt) -> Bool {
+    fileprivate func estimateRetainCycleAfterAppend(_ sql: SQLStmt) -> Bool {
         //TODO: impl
         return false
     }
@@ -76,7 +76,7 @@ public struct SQLStmt: ArrayLiteralConvertible {
 
 public extension SQLStmt {
     
-    public func where_(expressions: SQLStmt...) -> SQLStmt {
+    public func where_(_ expressions: SQLStmt...) -> SQLStmt {
         return append("WHERE").append(AND_JOINED(expressions))
     }
     
@@ -85,14 +85,14 @@ public extension SQLStmt {
     }
     
     public func in_(paramArr params: [AnyObject]) -> SQLStmt {
-        return append("IN").append(ENCLOSED(SQLStmt((params.map() {_ in "?"}).joinWithSeparator(" , "), params: params)))
+        return append("IN").append(ENCLOSED(SQLStmt((params.map() {_ in "?"}).joined(separator: " , "), params: params)))
     }
     
-    public func in_(params: AnyObject...) -> SQLStmt {
+    public func in_(_ params: AnyObject...) -> SQLStmt {
         return in_(paramArr: params)
     }
     
-    public func in_(expr: SQLStmt) -> SQLStmt {
+    public func in_(_ expr: SQLStmt) -> SQLStmt {
         return append("IN").append(ENCLOSED(expr))
     }
     
@@ -100,11 +100,11 @@ public extension SQLStmt {
         return append("LIKE")
     }
     
-    public func like(value: AnyObject) -> SQLStmt {
+    public func like(_ value: AnyObject) -> SQLStmt {
         return like().value(value)
     }
     
-    public func like(expr: SQLStmt) -> SQLStmt {
+    public func like(_ expr: SQLStmt) -> SQLStmt {
         return like().append(expr)
     }
     
@@ -112,11 +112,11 @@ public extension SQLStmt {
         return append("GLOB")
     }
     
-    public func glob(value: AnyObject) -> SQLStmt {
+    public func glob(_ value: AnyObject) -> SQLStmt {
         return glob().value(value)
     }
     
-    public func glob(expr: SQLStmt) -> SQLStmt {
+    public func glob(_ expr: SQLStmt) -> SQLStmt {
         return glob().append(expr)
     }
     
@@ -124,11 +124,11 @@ public extension SQLStmt {
         return append("MATCH")
     }
     
-    public func match(value: AnyObject) -> SQLStmt {
+    public func match(_ value: AnyObject) -> SQLStmt {
         return match().value(value)
     }
     
-    public func match(expr: SQLStmt) -> SQLStmt {
+    public func match(_ expr: SQLStmt) -> SQLStmt {
         return match().append(expr)
     }
     
@@ -136,19 +136,19 @@ public extension SQLStmt {
         return append("REGEXP")
     }
     
-    public func regex(value: AnyObject) -> SQLStmt {
+    public func regex(_ value: AnyObject) -> SQLStmt {
         return regex().value(value)
     }
     
-    public func regex(expr: SQLStmt) -> SQLStmt {
+    public func regex(_ expr: SQLStmt) -> SQLStmt {
         return regex().append(expr)
     }
     
-    public func id(id: String) -> SQLStmt {
+    public func id(_ id: String) -> SQLStmt {
         return append("\"\(id)\"", params: [])
     }
     
-    public func value(v: AnyObject) -> SQLStmt {
+    public func value(_ v: AnyObject) -> SQLStmt {
         return append("?", params: [v])
     }
 }

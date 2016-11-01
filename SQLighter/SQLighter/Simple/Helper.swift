@@ -11,16 +11,16 @@ import Foundation
 public let OR = OR_()
 public let AND = AND_()
 
-public func ID(id: String) -> SQLStmt {
+public func ID(_ id: String) -> SQLStmt {
     return SQLStmt().id(id)
 }
 
-public func VALUE(v: AnyObject) -> SQLStmt {
+public func VALUE(_ v: AnyObject) -> SQLStmt {
     return SQLStmt().value(v)
 }
 
 
-public func ENCLOSED(expressions: [SQLStmt]) -> SQLStmt {
+public func ENCLOSED(_ expressions: [SQLStmt]) -> SQLStmt {
     var enclosed = SQLStmt()
     enclosed = enclosed.append("(")
     for expr in expressions {
@@ -29,15 +29,15 @@ public func ENCLOSED(expressions: [SQLStmt]) -> SQLStmt {
     return enclosed.append(")")
 }
 
-public func ENCLOSED(expressions: SQLStmt...) -> SQLStmt {
+public func ENCLOSED(_ expressions: SQLStmt...) -> SQLStmt {
     return ENCLOSED(expressions)
 }
 
-public func ENCLOSED(sql: String, params: [AnyObject]) -> SQLStmt {
+public func ENCLOSED(_ sql: String, params: [AnyObject]) -> SQLStmt {
     return ENCLOSED(SQLStmt(sql, params: params))
 }
 
-public func ENCLOSED(sql: String) -> SQLStmt {
+public func ENCLOSED(_ sql: String) -> SQLStmt {
     return ENCLOSED(sql, params: [])
 }
 
@@ -46,7 +46,7 @@ public func AND_() -> SQLStmt {
     return pureSQL
 }
 
-public func AND_(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
+public func AND_(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let and = SQLStmt()
     return and.append(lhs).append(AND).append(rhs)
 }
@@ -56,19 +56,19 @@ public func OR_() -> SQLStmt {
     return pureSQL
 }
 
-public func OR_(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
+public func OR_(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let or = SQLStmt()
     return or.append(lhs).append(OR).append(rhs)
 }
 
-public func UNION(lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
+public func UNION(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
     let union = SQLStmt()
     return union.append(ENCLOSED([lhs])).append("UNION").append(ENCLOSED([rhs]))
 }
 
-internal func AND_JOINED(sqls: [SQLStmt]) -> [SQLStmt] {
+internal func AND_JOINED(_ sqls: [SQLStmt]) -> [SQLStmt] {
     var ret = [SQLStmt]()
-    for (index, sql) in sqls.enumerate() {
+    for (index, sql) in sqls.enumerated() {
         if index != 0  && (!sqls[index - 1].assemble().hasSuffix("OR"))  && (!sql.assemble().hasSuffix("OR")) {
             ret.append(AND)
         }

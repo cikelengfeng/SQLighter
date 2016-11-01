@@ -7,7 +7,7 @@ public extension SQLStmt {
         return ret
     }
     
-    public func from(expr: String) -> SQLStmt {
+    public func from(_ expr: String) -> SQLStmt {
         return append("FROM").id(expr)
     }
     

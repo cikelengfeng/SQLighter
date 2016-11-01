@@ -10,15 +10,15 @@ public extension SQLStmt {
         return append("REPLACE INTO")
     }
     
-    public func values(values: [[AnyObject]]) -> SQLStmt {
+    public func values(_ values: [[AnyObject]]) -> SQLStmt {
         var stmts = [SQLStmt]()
         stmts.append(SQLStmt("VALUES"))
-        for (index, oneRow) in values.enumerate() {
+        for (index, oneRow) in values.enumerated() {
             if index > 0 {
                 stmts.append(SQLStmt(","))
             }
             
-            let sqls: [SQLStmt] = ((oneRow.enumerate().map { (index, val) -> [SQLStmt] in
+            let sqls: [SQLStmt] = ((oneRow.enumerated().map { (index, val) -> [SQLStmt] in
                 if index + 1 == oneRow.count {
                     return [VALUE(val)]
                 }
