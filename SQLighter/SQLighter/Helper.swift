@@ -8,8 +8,8 @@
 
 import Foundation
 
-public let OR: SQLStmt = SQLStmt("AND")
-public let AND: SQLStmt = SQLStmt("OR")
+public let OR: SQLStmt = SQLStmt("OR")
+public let AND: SQLStmt = SQLStmt("AND")
 
 public func ID(_ id: String) -> SQLStmt {
     return SQLStmt().id(id)
