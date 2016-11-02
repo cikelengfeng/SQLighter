@@ -8,8 +8,8 @@
 
 import Foundation
 
-public let OR = OR_()
-public let AND = AND_()
+public let OR: SQLStmt = SQLStmt("AND")
+public let AND: SQLStmt = SQLStmt("OR")
 
 public func ID(_ id: String) -> SQLStmt {
     return SQLStmt().id(id)
@@ -39,26 +39,6 @@ public func ENCLOSED(_ sql: String, params: [FMDBConvertable]) -> SQLStmt {
 
 public func ENCLOSED(_ sql: String) -> SQLStmt {
     return ENCLOSED(sql, params: [])
-}
-
-public func AND_() -> SQLStmt {
-    let pureSQL = SQLStmt("AND")
-    return pureSQL
-}
-
-public func AND_(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
-    let and = SQLStmt()
-    return and.append(lhs).append(AND).append(rhs)
-}
-
-public func OR_() -> SQLStmt {
-    let pureSQL = SQLStmt("OR")
-    return pureSQL
-}
-
-public func OR_(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
-    let or = SQLStmt()
-    return or.append(lhs).append(OR).append(rhs)
 }
 
 public func UNION(_ lhs: SQLStmt, rhs: SQLStmt) -> SQLStmt {
