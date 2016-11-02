@@ -15,7 +15,7 @@ public func ID(_ id: String) -> SQLStmt {
     return SQLStmt().id(id)
 }
 
-public func VALUE(_ v: AnyObject) -> SQLStmt {
+public func VALUE(_ v: FMDBConvertable) -> SQLStmt {
     return SQLStmt().value(v)
 }
 
@@ -33,7 +33,7 @@ public func ENCLOSED(_ expressions: SQLStmt...) -> SQLStmt {
     return ENCLOSED(expressions)
 }
 
-public func ENCLOSED(_ sql: String, params: [AnyObject]) -> SQLStmt {
+public func ENCLOSED(_ sql: String, params: [FMDBConvertable]) -> SQLStmt {
     return ENCLOSED(SQLStmt(sql, params: params))
 }
 
