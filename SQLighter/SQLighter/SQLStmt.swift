@@ -145,7 +145,7 @@ public extension SQLStmt {
     }
     
     public func id(_ id: String) -> SQLStmt {
-        return append("\"\(id)\"", params: [])
+        return append(id, params: [])
     }
     
     public func value(_ v: FMDBConvertable) -> SQLStmt {
