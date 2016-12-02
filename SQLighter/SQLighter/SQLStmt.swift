@@ -84,6 +84,14 @@ public extension SQLStmt {
         return append("NOT")
     }
     
+    public func is_() -> SQLStmt {
+        return append("IS")
+    }
+    
+    public func null() -> SQLStmt {
+        return append("NULL")
+    }
+    
     public func in_(paramArr params: [FMDBConvertable]) -> SQLStmt {
         return append("IN").append(ENCLOSED(SQLStmt((params.map() {_ in "?"}).joined(separator: " , "), params: params)))
     }
