@@ -9,25 +9,25 @@
 import Foundation
 let str = "xxxxxxxxxxxxxxxx"
 let int = 1
-let select = SQLStmt()
-                .select("*")
-                .from("tbl_tags")
-                .where_(
-                        [User.name.like("3"),
-                        OR,
-                        User.id.not().in_("x", 1, 3)],
-                        [User.creationDate == "x",
-                        User.id < int],
-                        OR,
-                        [ID("c") != "ono",
-                        OR,
-                        ID("d").in_(paramArr: ["1","b","c","123"])])
-                .orderBy(("c1", Order.ASC), ("c2", Order.DESC))
-                .offset(42)
-                .limit(22)
-
-print(select.assemble())
-print(select.parameters())
+//let select = SQLStmt()
+//                .select("*")
+//                .from("tbl_tags")
+//                .where_(
+//                        [User.name.like("3"),
+//                        OR,
+//                        User.id.not().in_("x", 1, 3)],
+//                        [User.creationDate == "x",
+//                        User.id < int],
+//                        OR,
+//                        [ID("c") != "ono",
+//                        OR,
+//                        ID("d").in_(paramArr: ["1","b","c","123"])])
+//                .orderBy(("c1", Order.ASC), ("c2", Order.DESC))
+//                .offset(42)
+//                .limit(22)
+//
+//print(select.assemble())
+//print(select.parameters())
 
 let select2 = SQLStmt()
                 .select("c1","c3")
@@ -41,9 +41,9 @@ let select2 = SQLStmt()
                 .offset(42)
                 .limit(22)
 
-let un = UNION(select, rhs: select2)
-print(un.assemble())
-print(un.parameters())
+//let un = UNION(select, rhs: select2)
+//print(un.assemble())
+//print(un.parameters())
 
 let insert = SQLStmt()
     .insert()
@@ -82,3 +82,7 @@ let delete = SQLStmt()
 
 print(delete.assemble())
 print(delete.parameters())
+
+let sql = SQLStatment(plainSQL: "", parameters: [])
+print(sql.insert().context)
+print(sql.insert().complete().test().context)

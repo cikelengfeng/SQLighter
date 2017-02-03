@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		427CB2501E4447CC0085AE42 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CB24E1E4447CC0085AE42 /* Helper.swift */; };
 		427CB2511E4447CC0085AE42 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CB24F1E4447CC0085AE42 /* Operators.swift */; };
+		427CB2541E444A320085AE42 /* SQL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427CB2531E444A320085AE42 /* SQL.swift */; };
 		42A87EC81D8591D400258522 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87EC71D8591D400258522 /* main.swift */; };
 		42A87EDD1D85921E00258522 /* SQLStmt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A87ED61D85921E00258522 /* SQLStmt.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		427CB24E1E4447CC0085AE42 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		427CB24F1E4447CC0085AE42 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		427CB2531E444A320085AE42 /* SQL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQL.swift; sourceTree = "<group>"; };
 		42A87EC41D8591D400258522 /* SQLighter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SQLighter; sourceTree = BUILT_PRODUCTS_DIR; };
 		42A87EC71D8591D400258522 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		42A87ED61D85921E00258522 /* SQLStmt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SQLStmt.swift; sourceTree = "<group>"; };
@@ -44,6 +46,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		427CB2521E44497A0085AE42 /* ContextSenstive */ = {
+			isa = PBXGroup;
+			children = (
+				427CB2531E444A320085AE42 /* SQL.swift */,
+			);
+			path = ContextSenstive;
+			sourceTree = "<group>";
+		};
 		42A87EBB1D8591D300258522 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +85,7 @@
 				427CB24E1E4447CC0085AE42 /* Helper.swift */,
 				427CB24F1E4447CC0085AE42 /* Operators.swift */,
 				42A87ED61D85921E00258522 /* SQLStmt.swift */,
+				427CB2521E44497A0085AE42 /* ContextSenstive */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -106,11 +117,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Dean Xu Lab";
 				TargetAttributes = {
 					42A87EC31D8591D300258522 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -137,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42A87EDD1D85921E00258522 /* SQLStmt.swift in Sources */,
+				427CB2541E444A320085AE42 /* SQL.swift in Sources */,
 				427CB2511E4447CC0085AE42 /* Operators.swift in Sources */,
 				42A87EC81D8591D400258522 /* main.swift in Sources */,
 				427CB2501E4447CC0085AE42 /* Helper.swift in Sources */,
@@ -160,8 +173,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -205,8 +220,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -225,6 +242,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -232,6 +250,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -239,6 +258,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
