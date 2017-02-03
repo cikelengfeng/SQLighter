@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SQLighter"
-  s.version      = "0.1.1"
+  s.version      = "0.1.2"
   s.summary      = "SQL builder"
 
   # This description is used to generate tags and improve search results.
@@ -91,7 +91,7 @@ SQL Builder
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "SQLighter/SQLighter/*.swift","SQLighter/SQLighter/Simple/*.swift"
+  s.source_files  = "SQLighter/SQLighter/**.swift"
   s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
